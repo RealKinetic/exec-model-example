@@ -10,8 +10,10 @@ the operator pod using the kubernetes api.
 Running the demo
 ----------------
 
-Install/run [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/). I am using kubernetes v1.13.2.
-Install [skaffold](https://skaffold.dev/). I am using version v0.24.0
+Install/run [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/).
+I am using kubernetes v1.13.2.
+
+Install [skaffold](https://skaffold.dev/). I am using version v0.24.0.
 
 In the root folder of this repo, run ``skaffold dev``.
 
