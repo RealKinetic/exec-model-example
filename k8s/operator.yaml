@@ -1,0 +1,56 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: operator
+  namespace: juju
+  annotations:
+    hello: world
+  labels:
+    app: operator
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: operator
+    spec:
+      serviceAccountName: exec-sa
+      containers:
+      - name: exec-operator
+        image: gcr.io/rk-playground/exec-operator
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: exec-role
+  namespace: juju
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs:
+  - create
+  - get
+  - list
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: exec-sa
+  namespace: juju
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: exec-rb
+  namespace: juju
+subjects:
+- kind: ServiceAccount
+  name: exec-sa
+  namespace: juju
+roleRef:
+  kind: Role
+  name: exec-role
+  apiGroup: rbac.authorization.k8s.io
+---

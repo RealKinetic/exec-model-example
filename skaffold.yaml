@@ -1,0 +1,14 @@
+apiVersion: skaffold/v1beta6
+kind: Config
+build:
+  tagPolicy:
+    sha256: {}
+  artifacts:
+  - image: gcr.io/rk-playground/exec-operator
+    context: ./operator/
+  - image: gcr.io/rk-playground/exec-workload
+    context: ./workload/
+deploy:
+  kubectl:
+    manifests:
+      - k8s/*.yaml
